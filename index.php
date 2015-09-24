@@ -52,8 +52,10 @@ $attr = array(
 $input->attributes = $attr;
 $div->addElement($input);
 
+$body = new Element('body');
+$body->addElement($div);
 //$div->codeView();
-$html->addElement($div);
+$html->addElement($body);
 $meta = array(
     'tiwtter:site' => 'symfony'
 );
@@ -61,5 +63,8 @@ $html->meta = $meta;
 //echo $div->build();
 //$div->codeView();
 
-$div->tree();
-//echo $space_count;
+//$div->tree();
+//$html->tree();
+$html->style = array('bootstrap.min.css','bootstrap-theme.min.css');
+$html->script = array('bootstrap.min.js');
+$html->render();

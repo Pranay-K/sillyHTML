@@ -86,7 +86,9 @@ class Element{
      * 
      * @return type
      */
-    public function build(){
+    public function build($space = null){
+        if($space == null)
+            $space = 0;
         $attr = '';
         $inH = '';
 
@@ -96,14 +98,13 @@ class Element{
 
         if(count($this->innerElement)>0){
                 foreach($this->innerElement as $element){
-                        $inH .= $element->build();
+                        $inH .= $element->build($space+count($element->innerElement));
                 }
         }
         
         if($this->inline == 0){
             if(READABLE == 'TRUE'){
-                global $space_count;
-                return $this->tabbing_space($space_count = $space_count+1).'<'.$this->type.$attr.'>'."\n".$this->tabbing_space($space_count = $space_count+1).$this->innerHTML.' '.$inH."\n".$this->tabbing_space($space_count = $space_count-2).'</'.$this->type.'>'."\n";
+                return $this->tabbing_space($space).'<'.$this->type.$attr.'>'."\n".$this->innerHTML.' '.$inH."\n".$this->tabbing_space($space+1).'</'.$this->type.'>'."\n";
             }
             else{
                 return '<'.$this->type.$attr.'>'.$this->innerHTML.' '.$inH.'</'.$this->type.'>';
@@ -126,10 +127,24 @@ class Element{
     
     public function tree(){
         echo '<pre>';
-        print_r($this);
+        echo $this->branching(2);
+        //print_r($this);
         echo '</pre>';
     }
     
+    private function branching($count){
+        $branch = $this->type;
+        if(count($this->innerElement)>0){
+            foreach($this->innerElement as $element){
+                $branch .= "\n";
+                for($i = 0;$i < $count-1;$i++){
+                    $branch .= '-';
+                }
+                $branch .= $element->branching($count+count($element->innerElement));
+            }
+        }
+        return $branch;
+    }
     
     
     /**

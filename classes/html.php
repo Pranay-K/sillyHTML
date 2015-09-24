@@ -19,14 +19,26 @@ class HTML extends Element{
         echo '<html>';
         echo '<head>';
         echo '<title>'.$this->title.'</title>';
+        
+        //RENDERING METAS    
         if(count($this->meta) > 0){
             foreach($this->meta as $key=>$value)
                 echo '<meta name="'.$key.'" content="'.$value.'">';
         }
+        
+        //RENDERING STYLE CODES
+        if(count($this->style)>0){
+            foreach($this->style as $style)
+                echo '<link rel="stylesheet" href="'.CSS.$style.'">';
+        }
+        
+        //RENDERING SCRIPT CODES
+        if(count($this->script)>0){
+            foreach($this->script as $script)
+                echo '<script src="'.JS.$script.'"></script>';
+        }
         echo '</head>';
-        echo '<body>';
         echo $this->build();
-        echo '</body>';
         echo '</html>';
     }
 
