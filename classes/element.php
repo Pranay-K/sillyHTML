@@ -39,6 +39,7 @@ class Element{
         $this->attributes[$attr] = $value;
     }
     
+    
     /**
      * 
      * @param type $html : STRING
@@ -55,32 +56,35 @@ class Element{
         $this->innerElement[count($this->innerElement)] = $element;
     }
 
-
+    public function addClass($class){
+        if(isset($this->attributes['class'])){
+            $clas = $this->attributes['class'];
+            $clas .= ' '.$class;
+            $this->attributes['class'] = $clas;
+        }
+        else{
+            $this->attributes['class'] = $class;
+        }
+    }
+    
+    public function removeClass($class){
+        $cls_array = explode(' ',$this->attributes['class']);
+        
+        $cls = '';
+        foreach($cls_array as $clss){
+            if($clss != $class)
+                $cls .= $clss.' ';
+        }
+                
+        //$cls = str_replace($class, '', $this->attributes['class']);
+        $this->attributes['class'] = trim($cls);
+    }
     //Not needed for now
     public function removeAttr(){
 
     }
 
 
-    /*Just for testing, Not needed
-    public function intoHTML(){
-            $attr = '';
-            $inH = '';
-
-            foreach($this->attributes as $key=>$value){
-                    $attr .= ' '.$key.'="'.$value.'" ';
-            }
-
-            if(count($this->innerElement)>0){
-                    foreach($this->innerElement as $element){
-                            $inH .= $element->build();
-                    }
-            }
-
-            //echo $inH;
-
-            echo '<'.$this->type.$attr.'>'.$this->innerHTML.' '.$inH.'</'.$this->type.'>'."\n";
-    }*/
 
     /**
      * 
