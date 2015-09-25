@@ -12,3 +12,6 @@ define('BOOTSTRAP_SCRIPT','');
 require('classes/element.php');// Should always be included
 require('classes/html.php');// is necessary if building HTML context too
 require('classes/lists.php');// temporary classs, if want to use quick listings
+require('classes/bButton.php');
+require('classes/bButtonGroup.php');
+require('classes/bToolbar.php');

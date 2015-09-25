@@ -4,6 +4,30 @@ require('main.php');
 $html = new HTML();
 $html->title = 'Test RUN';
 
+$button = new bButton('This is test button','primary');
+$button->addAttr('onclick', "alert('button clicked');");
+$button->codeView();
+echo $button->build();
+
+
+$bgroup = new bButtonGroup('Left,Middle,Right');
+$bgroup->addElement($button);
+$bgroup->codeView();
+echo $bgroup->build();
+
+$btoolbar = new bToolbar(array($bgroup,$bgroup));
+$btoolbar->codeView();
+echo $btoolbar->build();
+
+
+
+$html->style = array('bootstrap.min.css','bootstrap-theme.min.css');
+$html->script = array('bootstrap.min.js');
+$html->render();
+
+/*$html = new HTML();
+$html->title = 'Test RUN';
+
 $div = new Element('div');
 $div->addAttr('id','scupltDiv');
 $div->addAttr('readonly','readonly');
@@ -68,3 +92,4 @@ $html->meta = $meta;
 $html->style = array('bootstrap.min.css','bootstrap-theme.min.css');
 $html->script = array('bootstrap.min.js');
 $html->render();
+ * */
