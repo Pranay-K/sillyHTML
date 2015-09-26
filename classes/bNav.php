@@ -2,22 +2,22 @@
 /**
  * @author Pranay Katiyar <pranay.k.katiyar@gmail.com>@
  */
-class bNav extends Element{
+class bNav extends bList{
     
     function __construct($array,$class = null) {
         //parent::__construct($type);
-        $this->type = 'div';
-        $list = new bList();
-        $list->addClass('nav');
+        $this->type = 'ul';
+        //$list = new bList();
+        $this->addClass('nav');
         if($class == null)
-            $list->addClass('nav-tabs');
+            $this->addClass('nav-tabs');
         else{
             $cls = explode('|',$class);
             foreach($cls as $cls){
-                $list->addClass('nav-'.$cls);
+                $this->addClass('nav-'.$cls);
             }
         }
-        $list->addSub($array);
+        $this->addSub($array);
         
         foreach($array as $key=>$arr){
             if(is_array($arr)){
@@ -33,7 +33,7 @@ class bNav extends Element{
                 $inn2 = $drp->innerElement[1];
                 $li->addElement($inn1);
                 $li->addElement($inn2);
-                $list->addElement($li);
+                $this->addElement($li);
             }
             
         }
@@ -41,11 +41,11 @@ class bNav extends Element{
         
         
         
-        $items = $list->innerElement;
+        $items = $this->innerElement;
         foreach($items as $item)
-            $item->addAttr('role', 'presentation');
+            $this->addAttr('role', 'presentation');
         $items[0]->addClass('active');
-        $this->addElement($list);
+        //$this->addElement($list);
     }
     
     

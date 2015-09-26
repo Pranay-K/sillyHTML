@@ -49,6 +49,32 @@ $nav = new bNav(['Home'=>'#','Profile'=>'#','Messages'=>'#','Dropdown'=>['One'=>
 //$nav->codeView();
 echo $nav->build();
 
+//CREATING BREADCRUMB
+$br = new bBreadcrumb(['Home'=>'#','Library'=>'#','Data'=>'active']);
+//$br->codeView();
+echo $br->build();
+
+
+//CREATING PAGINATION
+$pag = new bPagination(6, 2, 'index.php/id=@',1,'lg');
+//$pag->codeView();
+echo $pag->build();
+
+
+//xs,sm,md,lg
+$grid = new bGrid('md-2,4,6|xs-4,5,3');
+//$grid->codeView();
+
+
+//CREATING NAVBAR
+$navbar = new bNavbar(['Home'=>'#','Profile'=>'#','Messages'=>'#','Dropdown'=>['One'=>'#','Two'=>'#','Three'=>'']]);
+$nav = new bNav(['Link'=>'#','Dropdown'=>['One'=>'#','Two'=>'#','Three'=>'']]);
+$navbar->extendMenu($nav,'right');
+$navbar->codeView();
+echo $navbar->build();
+
+
+
 $html->style = array('bootstrap.min.css','bootstrap-theme.min.css');
 $html->script = array('jquery.min.js','bootstrap.min.js');
 $html->render();

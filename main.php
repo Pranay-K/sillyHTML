@@ -23,3 +23,8 @@ require('classes/bIcon.php');
 require('classes/bList.php');
 require('classes/bInput.php');
 require('classes/bNav.php');
+require('classes/bBreadcrumb.php');
+require('classes/bPagination.php');
+require('classes/bContainer.php');
+require('classes/bGrid.php');
+require('classes/bNavbar.php');

@@ -38,7 +38,14 @@ class Element{
     public function addAttr($attr,$value){
         $this->attributes[$attr] = $value;
     }
-    
+    //Not needed for now
+    public function removeAttr($attr){
+        foreach($this->attributes as $key=>$val){
+            if($key == $attr)
+                unset($this->attributes[$key]);
+        }
+        
+    }
     
     /**
      * 
@@ -54,6 +61,11 @@ class Element{
      */
     public function addElement($element){
         $this->innerElement[count($this->innerElement)] = $element;
+    }
+    
+    public function addElements($elements){
+        foreach($elements as $element)
+            $this->innerElement[count($this->innerElement)] = $element;
     }
 
     public function addClass($class){
@@ -79,10 +91,7 @@ class Element{
         //$cls = str_replace($class, '', $this->attributes['class']);
         $this->attributes['class'] = trim($cls);
     }
-    //Not needed for now
-    public function removeAttr(){
-
-    }
+    
 
 
 
