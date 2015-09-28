@@ -31,6 +31,8 @@ class bPagination extends Element{
             //End of Previous button
         }
         
+        
+        
         $list->addSub($arr);
         if($class != null){
             foreach(explode('|',$class) as $cls)

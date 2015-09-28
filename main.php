@@ -28,3 +28,11 @@ require('classes/bPagination.php');
 require('classes/bContainer.php');
 require('classes/bGrid.php');
 require('classes/bNavbar.php');
+require('classes/bPanel.php');
+require('classes/bProgressBar.php');
+require('classes/bAlert.php');
+
+//ADDON CLASSES
+
+
+//USER CLASSES

@@ -2,65 +2,42 @@
 /**
  * @author Pranay Katiyar <pranay.k.katiyar@gmail.com>@
  */
-class bList extends Element{
+class bProgressBar extends Element{
     
     
-    private $sub = [];
     
-    function __construct($array = null) {
-        //parent::__construct($type);
-        $this->type = 'ul';
-        
-        
-        /*
-         * 
-         * format of array
-         * array(
-         *  'name' => 'link',
-         *  'name' => 'link'
-         * );
-         */
-        if($array != null){
-            $arr = explode(',',$array);
-            foreach($arr as $value){
-                $child = new Element('li');
-                
-                    $anc = new Element('a');
-                    $anc->addAttr('href', '#');
-                    $anc->addHTML($value);
-                if($value != '|')
-                    $child->addElement($anc);
+    function __construct($value,$class = null) {
+        parent::__construct();
+        $this->addClass('progress');
+        $bar = new Element();
+        $bar->attributes = array('class'=>'progress-bar','role'=>'progressbar','aria-valuenow'=>$value,'aria-valuemin'=>'0','aria-valuemax'=>'100','style'=>'width:'.$value.'%');
+        $bar->addHTML($value.'%');
+        if($class != null){
+            foreach(explode(',',$class) as $cls){
+                if($cls != 'active')
+                    $bar->addClass('progress-bar-'.$cls);
                 else
-                    $child->attributes = array('class'=>'divider','role'=>'seperator');
-                $this->addElement($child);
+                    $bar->addClass('active');
             }
         }
+        $this->addElement($bar);
     }
     
-    public function addSub($array){
-        
-        foreach($array as $key=>$value){
-            if(is_string($value)){
-                $child = new Element('li');
-                        $anc = new Element('a');
-                        $anc->addAttr('href', $value);
-                        $anc->addHTML($key);
-                if($key != '|'){
-                    if($value != '')
-                        $child->addElement($anc);
-                }
+    public function addStack($value,$class = null){
+        $bar = new Element();
+        $bar->attributes = array('class'=>'progress-bar','role'=>'progressbar','aria-valuenow'=>$value,'aria-valuemin'=>'0','aria-valuemax'=>'100','style'=>'width:'.$value.'%');
+        $bar->addHTML($value.'%');
+        if($class != null){
+            foreach(explode(',',$class) as $cls){
+                if($cls != 'active')
+                    $bar->addClass('progress-bar-'.$cls);
                 else
-                    $child->attributes = array('class'=>'divider','role'=>'seperator');
-                $this->addElement($child);
+                    $bar->addClass('active');
             }
-            else{
-                //$child->addElement($value);
-                //$this->addElement($child);
-                
-            }
-                
         }
+        $this->addElement($bar);
     }
+    
     
     
 }

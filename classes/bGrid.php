@@ -21,7 +21,7 @@ class bGrid extends Element{
         }
         
         $device = explode('|',$portions);
-        print_r($device);
+        //print_r($device);
         foreach($device as $device){
             echo $device;
             $this->addDivisions($device);

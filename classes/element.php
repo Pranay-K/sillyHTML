@@ -63,6 +63,10 @@ class Element{
         $this->innerElement[count($this->innerElement)] = $element;
     }
     
+    public function prependElement($element){
+        $this->innerElement = array_merge(array('0'=>$element),$this->innerElement);
+    }
+    
     public function addElements($elements){
         foreach($elements as $element)
             $this->innerElement[count($this->innerElement)] = $element;
@@ -131,7 +135,7 @@ class Element{
         }
     }
     
-    public function tabbing_space($space_count){
+    private function tabbing_space($space_count){
         $space = '';
         for($i = 0;$i<$space_count;$i++)
             $space .= ' ';

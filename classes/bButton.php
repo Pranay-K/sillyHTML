@@ -7,19 +7,24 @@ class bButton extends Element{
     /**
      * 
      * @author Pranay Katiyar <pranay.k.katiyar@gmail.com>
-     * @param type $type : STRING [div,li,ul,...,pre]
-     * @param type $array : ARRAY
+     * @param type $value : STRING or ELEMENT (OBJECT)
+     * @param type $class : STRING eg. primary,lg
      */
     
     function __construct($value,$class = null) {
         //parent::__construct($type);
         $this->type = 'button';
-        $this->addHTML($value);
+        
+        if(is_string($value))
+            $this->addHTML($value);
+        else if(is_object($value))
+            $this->addElement ($value);
+        
         if($class == null)
             $cls = 'btn btn-default';
         else{
             $cls = 'btn';
-            $ex = explode('|',$class);
+            $ex = explode(',',$class);
             foreach($ex as $ex)
                 $cls .= ' btn-'.$ex;
         }
