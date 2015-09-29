@@ -33,6 +33,6 @@ require('classes/bProgressBar.php');
 require('classes/bAlert.php');
 
 //ADDON CLASSES
-
+require('addons/TextStyles.php');
 
 //USER CLASSES

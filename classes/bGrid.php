@@ -4,6 +4,10 @@
  */
 class bGrid extends Element{
     
+    /**
+     * @author Pranay Katiyar <pranay.k.katiyar@gmail.com>
+     * @param int $portions : STRING TYPE md-4,5,6|xs-3,4,5
+     */
     function __construct($portions) {
         $this->type = 'div';
         $this->addClass('row');
