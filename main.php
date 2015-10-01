@@ -31,6 +31,7 @@ require('classes/bNavbar.php');
 require('classes/bPanel.php');
 require('classes/bProgressBar.php');
 require('classes/bAlert.php');
+require('classes/bTable.php');
 
 //ADDON CLASSES
 require('addons/TextStyles.php');

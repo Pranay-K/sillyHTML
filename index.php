@@ -91,8 +91,14 @@ echo $pg->build();
 
 //CREATING ALERT
 $alert = new bAlert('This is a sample alert box', 1,'danger');
-$alert->codeView();
+//$alert->codeView();
 echo $alert->build();
+
+//CREATING TABLE
+$table = new bTable();
+$table->codeView();
+$table->addHeader('Name,Age,Phone');
+echo $table->build();
 
 
 $html->style = array('bootstrap.min.css','bootstrap-theme.min.css');
