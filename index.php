@@ -1,7 +1,7 @@
 <?php
 
 require('main.php');
-$html = new HTML();
+/*$html = new HTML();
 $html->title = 'Test RUN';
 
 //CREATING A BUTTON
@@ -108,4 +108,7 @@ $html->render();
 
 
 ?>
-<span class="glyphicon glyphicon-minus" ></span>
+<span class="glyphicon glyphicon-minus" ></span>*/
+
+$file='parseFile.php';
+$engine = new sillyEngine($file);

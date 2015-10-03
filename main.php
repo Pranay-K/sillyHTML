@@ -13,6 +13,9 @@ require('classes/element.php'); // Should always be included
 require('classes/html.php');   // is necessary if building HTML context too
 require('classes/lists.php'); // temporary classs, if want to use quick listings
 
+//ENGINE RELATED CLASSES
+ require('classes/sillyEngine.php');
+
 //BOOTSTRAP CLASSES
 require('classes/bButton.php');
 require('classes/bButtonGroup.php');
