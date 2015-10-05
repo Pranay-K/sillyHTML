@@ -1,16 +1,17 @@
-=div(class=vella,style=color:red){
-    =p(){ Basic Paragraph }
-    =h1(){ Header 1}
-}
-=p.trello.phamo(){
-    =p(){ Basic Paragraph 2 }
-    =h2#header_imp(){
-        =span(){ This is a simple text }
+=include(jquery){}
+=include(bootstrap){}
+    =style(){
+    .trello{
+        color:red;
     }
 }
-=div{
-    =p{
-        Hi, THis is just a paragraph
+=div(){ This is a div }
+=p.trello.pharma(){
+    =span(){ This is a span }
+    =b(){ This is bold Feature }
+    =b(){ 
+        =i.stalker(){ Bold and Italic Text }
     }
 }
-=img(src=http://board.phpbuilder.com/images/logo.jpg){}
+=h1#header(){ This is just header }
+=img(src=https://s0.2mdn.net/viewad/4362922/1-goibibo-irctc-970x250.jpg){}

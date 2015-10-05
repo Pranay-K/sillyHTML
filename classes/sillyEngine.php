@@ -2,7 +2,7 @@
 class sillyEngine{
     private $file;
     private $element_count = 0;
-    
+    private $excludeObjects = ['include','bAlert','bBreadcrumb','bButton','bButtonGroup','bContainer','bDrop','bGraphicon','bContainer','bDrop','bGraphicon'];
     
     function __construct($file) {
         $this->file = $file;
@@ -10,14 +10,8 @@ class sillyEngine{
     }
     
     private function parseFile(){
-        //$count = 0;
-        //$object = [];
-        //$file = fopen($this->file,"r");
         $content = file_get_contents($this->file);
-
         $content = trim(preg_replace('/\s+/', ' ', $content));
-        //$content = trim($content);
-
         $result = $this->countBraces($content);
 
         echo '<pre>';
@@ -26,7 +20,7 @@ class sillyEngine{
         echo '</pre>';
         $body = new Element();
         $this->parse_html($result,$body);
-        //parse_shtml($result,'body');
+        //$this->parse_shtml($result,'body');
         $body->codeView();
         echo $body->build();
 
@@ -37,22 +31,43 @@ class sillyEngine{
 
     private function parse_html($result,$body){
         foreach($result as $key=>$element){
-            $object = new Element($element['object']);//Creating dynamic Object
-            if($element['attr'] != ''){
-                foreach(explode(',',$element['attr']) as $attr){
-                    $val = explode('=',$attr); // GETTING ATTRIBUTE VALUES
-                    $object->addAttr($val[0], $val[1]);
+            if(!in_array($element['object'],$this->excludeObjects)){
+                $object = new Element($element['object']); //Creating dynamic Object
+                if($element['attr'] != ''){
+                    foreach(explode(',',$element['attr']) as $attr){
+                        $val = explode('=',$attr); // GETTING ATTRIBUTE VALUES
+                        $object->addAttr($val[0], $val[1]);
+                    }
                 }
-            }
+                if(is_array($element['inner'])){
+                    $this->parse_html($element['inner'],$object); // ADDING INNER ELEMENTS TO OBJECT
+                }
+                else{
+                    $object->addHTML($element['inner']); // ADDING HTML TO OBJECT
+                }
 
-            if(is_array($element['inner'])){
-                $this->parse_html($element['inner'],$object); // ADDING INNER ELEMENTS TO OBJECT
+                $body->addElement($object); // APPENDING OBJECT WITH INNER OBJECTS
             }
             else{
-                $object->addHTML($element['inner']); // ADDING HTML TO OBJECT
+                $this->objectTypes($element,$body);
+                //$body->addElement($object);
             }
-
-            $body->addElement($object);// APPENDING OBJECT WITH INNER OBJECTS
+        }
+    }
+    
+    private function objectTypes($element,$body){//element is type array
+        switch($element['object']){
+            case 'include':
+                $val = $$element['attr'];
+                foreach($val as $val){
+                    if(strpos($val,'.css')){
+                        $style = new Element('style');
+                    }
+                    else if(strpos($val,'.js')){
+                        
+                    }
+                }
+                break;
         }
     }
 
@@ -91,7 +106,7 @@ class sillyEngine{
         for($i = 0;$i<strlen($content);$i++){
             //echo $content[$i].'<br/>';
             $temp = $block;
-            $chr = $content[$i];
+            $block_string .= $chr = $content[$i];
             if($chr == '{'){
                 $block += 1;
             }
@@ -105,15 +120,18 @@ class sillyEngine{
             if(($block - $temp) < 0){
                 //echo 'Change Close</br/>';
                 //$block_end = $i;
+                //echo $block;
                 if($block == 0){
                     $block_end = $i;
-                    $block_string = substr($content, $block_start,$block_end+1);
+                    //$block_string = substr($content, $block_start,$block_end+1);
                     //echo $block_string.'<br/>';
                     $block_start = $i+1;
                     if( strpos($block_string,'=') !== FALSE  && strpos($block_string,'{') !== FALSE && strpos($block_string,'}') !== FALSE)
                         $object[count($object)]= $this->createObject(trim($block_string));
                     else
                         $object[count($object)]= trim($block_string);
+                    $block_start = $i+1;
+                    $block_string = '';
                 }
 
             }
@@ -141,12 +159,13 @@ class sillyEngine{
 
 
         $object_name = $this->getStringBetween($outblock,'=','(');
+        //echo $object_name.'<br/>';
         $attributes = $this->getStringBetween($outblock,'(',')');
 
         //Implementing short code ID 
         $obj_id = explode('#',$object_name);
 
-        if(count($obj_id)>1 && count($obj_id)<2 ){
+        if(count($obj_id)==2 ){
             if($attributes != '')
                 $attributes .= ",id=".$obj_id[1];
             else
@@ -202,6 +221,8 @@ class sillyEngine{
         $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
         return substr($sub,0,strpos($sub,$to));
     }
+    
+    
 }
 
 
