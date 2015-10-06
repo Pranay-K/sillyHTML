@@ -25,7 +25,7 @@ class Element{
         }
         else{
                 $this->type = $type;
-                if($type == 'img' || $type == 'input')
+                if($type == 'img' || $type == 'input' || $type == 'link')
                     $this->inline = 1;
         }
     }

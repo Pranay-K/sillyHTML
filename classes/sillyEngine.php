@@ -2,7 +2,7 @@
 class sillyEngine{
     private $file;
     private $element_count = 0;
-    private $excludeObjects = ['include','bAlert','bBreadcrumb','bButton','bButtonGroup','bContainer','bDrop','bGraphicon','bContainer','bDrop','bGraphicon'];
+    private $excludeObjects = ['include','loop'];
     
     function __construct($file) {
         $this->file = $file;
@@ -11,6 +11,7 @@ class sillyEngine{
     
     private function parseFile(){
         $content = file_get_contents($this->file);
+        $content = $this->removeComments($content);
         $content = trim(preg_replace('/\s+/', ' ', $content));
         $result = $this->countBraces($content);
 
@@ -26,6 +27,16 @@ class sillyEngine{
 
         //parse_to_file($result,'$body');
 
+    }
+    
+    private function removeComments($content){
+        $exclude = $this->getStringBetween($content,'/*','*/');
+        $content = str_replace($exclude, '', $content);
+        $content = str_replace('/*', '', $content);
+        $content = str_replace('*/', '', $content);
+        //$exclude = $this->getStringBetween($content,'//',PHP_EOL);
+        //$content = str_replace($exclude, '', $content);
+        return $content;
     }
 
 
@@ -55,21 +66,65 @@ class sillyEngine{
         }
     }
     
-    private function objectTypes($element,$body){//element is type array
+    private function objectTypes($element,$body){ //element is type array
+        //print_r($element);
         switch($element['object']){
             case 'include':
+                global $$element['attr'];
                 $val = $$element['attr'];
                 foreach($val as $val){
                     if(strpos($val,'.css')){
-                        $style = new Element('style');
+                        $style = new Element('link');
+                        $style->attributes = array("rel"=>"stylesheet","href"=>$val);
+                        $body->addElement($style);
                     }
                     else if(strpos($val,'.js')){
+                        $style = new Element('script');
+                        $style->attributes = array("src"=>$val);
+                        $body->addElement($style);
+                    }
+                }
+                break;
+            case 'loop':
+                $opt = explode(',',$element['attr']);
+                if(isset($opt[1])){
+                    $margin = explode('/',$opt[1]);
+                    foreach($margin as $val){
+                        $item = new Element($opt[0]);
+                        $data = $element['inner'];
+                        //str_replace('#', $val, $data);
+                        if(is_array($data)){
+                            $data = $this->array_replacing($data,$val);
+                            $this->parse_html($data,$item);
+                            $body->addElement($item);
+                        }
+                        else{
+                            $data = str_replace('#', $val, $data);
+                            $item->addHTML($data);
+                            $body->addElement($item);
+                        }
+                        //print_r($data);
                         
                     }
                 }
                 break;
         }
     }
+    
+    private function array_replacing($array,$replace){
+        $map = array_map(function($v) use ($replace){
+            if(is_array($v))
+                $v =$this->array_replacing($v,$replace);
+            else if(is_string($v))
+                $v = str_replace('#', $replace, $v);
+            //print_r($v);
+            return $v;
+        },$array);
+        return $map;
+    }
+    
+    
+    
 
     private function parse_shtml($result,$body){
         foreach($result as $key=>$element){
@@ -124,7 +179,7 @@ class sillyEngine{
                 if($block == 0){
                     $block_end = $i;
                     //$block_string = substr($content, $block_start,$block_end+1);
-                    //echo $block_string.'<br/>';
+                    echo $block_string.'<br/>';
                     $block_start = $i+1;
                     if( strpos($block_string,'=') !== FALSE  && strpos($block_string,'{') !== FALSE && strpos($block_string,'}') !== FALSE)
                         $object[count($object)]= $this->createObject(trim($block_string));

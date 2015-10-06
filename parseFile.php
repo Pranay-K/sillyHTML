@@ -1,6 +1,6 @@
 =include(jquery){}
 =include(bootstrap){}
-    =style(){
+=style(){
     .trello{
         color:red;
     }
@@ -9,9 +9,20 @@
 =p.trello.pharma(){
     =span(){ This is a span }
     =b(){ This is bold Feature }
-    =b(){ 
+    =b(){
         =i.stalker(){ Bold and Italic Text }
     }
 }
 =h1#header(){ This is just header }
 =img(src=https://s0.2mdn.net/viewad/4362922/1-goibibo-irctc-970x250.jpg){}
+=ul(){
+    =li(){ First }
+    =li(){ Second }
+    =li(){ Third }
+}
+=ol(){
+    =loop(li,First/Second/Third){
+       This loops #
+    
+    }
+}
