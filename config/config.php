@@ -43,4 +43,12 @@ $bootstrap = ['assets/css/bootstrap.min.css','assets/css/bootstrap-theme.min.css
  * BASIC CLASSES INCLUDES
  * -------------------------------------------
  */
-define('CLASS','classes');
+define('CLASS_ADDRESS','classes');
+/**
+ * -------------------------------------------
+ * ADDON INCLUDES
+ * -------------------------------------------
+ * Defines the addon folder where the addons are found.
+ * Generally the folder is 'addons', which can be changed to any custom folder
+ */
+define('ADDONS','addons');

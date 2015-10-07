@@ -120,7 +120,7 @@ class Element{
         }
         
         if($this->inline == 0){
-            if(READABLE == 'TRUE'){
+            if(COMPRESSED == 'FALSE'){
                 return $this->tabbing_space($space).'<'.$this->type.$attr.'>'."\n".$this->innerHTML.' '.$inH."\n".$this->tabbing_space($space+1).'</'.$this->type.'>'."\n";
             }
             else{
@@ -128,7 +128,7 @@ class Element{
             }
         }
         else{
-            if(READABLE == 'TRUE')
+            if(COMPRESSED == 'FALSE')
                 return '<'.$this->type.$attr.' />'."\n";
             else 
                 return '<'.$this->type.$attr.' />'."\n";
