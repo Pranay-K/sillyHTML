@@ -43,7 +43,17 @@ class sillyEngine{
     private function parse_html($result,$body){
         foreach($result as $key=>$element){
             if(!in_array($element['object'],$this->excludeObjects)){
-                $object = new Element($element['object']); //Creating dynamic Object
+                
+                //Checking if object is custom element
+                if(strpos($element['object'],'[')!==false && strpos($element['object'],']')!==false){
+                    $obj_name = explode('[',$element['object'])[0];
+                    $param = $this->getStringBetween($element['object'],'[',']');
+                    //echo $obj_name;
+                    $object = new $obj_name($param);
+                }
+                else{
+                    $object = new Element($element['object']); //Creating dynamic Object
+                }
                 if($element['attr'] != ''){
                     foreach(explode(',',$element['attr']) as $attr){
                         $val = explode('=',$attr); // GETTING ATTRIBUTE VALUES
@@ -56,8 +66,8 @@ class sillyEngine{
                 else{
                     $object->addHTML($element['inner']); // ADDING HTML TO OBJECT
                 }
-
                 $body->addElement($object); // APPENDING OBJECT WITH INNER OBJECTS
+                
             }
             else{
                 $this->objectTypes($element,$body);
@@ -216,7 +226,15 @@ class sillyEngine{
         $object_name = $this->getStringBetween($outblock,'=','(');
         //echo $object_name.'<br/>';
         $attributes = $this->getStringBetween($outblock,'(',')');
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
         //Implementing short code ID 
         $obj_id = explode('#',$object_name);
 
@@ -271,6 +289,7 @@ class sillyEngine{
         return $value;
     }
 
+    // Gets string in bettwen braces
     private function getStringBetween($str,$from,$to)
     {
         $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
