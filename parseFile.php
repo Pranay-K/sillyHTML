@@ -4,6 +4,10 @@
     .trello{
         color:red;
     }
+   #name{
+    background-color:black;
+color:white;
+    }
 }
 =div(){ This is a div }
 =p.trello.pharma(){
@@ -25,4 +29,21 @@
        This loops #
     
     }
+}
+
+
+=div#name(data-id=magic){
+
+    =b(){My name is pranay}
+}
+
+
+
+=bButton[This is button](){}
+=bButtonGroup[Left,Middle,Right](){}
+=bGraphicon[minus](){}
+
+=bToolbar[](){
+    =bButton[This is button](){}
+    =bButtonGroup[Left,Middle,Right](){}
 }
